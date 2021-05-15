@@ -1,0 +1,31 @@
+{
+  "name": "blackpanda-media/redbum",
+  "description": "Git bases Wiki projekt.",
+  "type" : "project",
+  "homepage": "https://github.com/blackpanda-media/redbum",
+  "readme": "README.md",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Davúd Pauli",
+      "role": "Developer"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "RedBum\\": "src/"
+    }
+  },
+  "require": {
+    "php": ">=7.3",
+    "BlackBonjour/service-manager": "1.2.*",
+    "czproject/git-php": "4.0.*"
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "3.*",
+    "phpstan/phpstan": "0.*",
+    "phpunit/phpunit": "9.*",
+    "roave/security-advisories": "dev-latest",
+    "squizlabs/php_codesniffer": "3.*"
+  }
+}
