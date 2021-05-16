@@ -19,7 +19,10 @@
   "require": {
     "php": ">=7.3",
     "BlackBonjour/service-manager": "1.2.*",
-    "czproject/git-php": "4.0.*"
+    "czproject/git-php": "4.0.*",
+    "slim/psr7": "1.4.*",
+    "slim/slim": "4.7.*",
+    "twig/twig": "3.3.*"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "3.*",

@@ -1,21 +1,18 @@
 <?php
 
-use CzProject\GitPhp\Git;
-use RedBum\Configuration\RepositoryConfiguration;
+declare(strict_types=1);
 
-require_once ('../vendor/autoload.php');
+use BlackBonjour\ServiceManager\ServiceManager;
+use RedBum\Handler\IndexHandler;
+use Slim\Factory\AppFactory;
 
-// PHP settings
-error_reporting(E_ALL | E_STRICT);
-ini_set('display_errors', 'Off');
-ini_set('log_errors', 'On');
-ini_set('error_log', sprintf('%s/%s-error.log', '../log', date('Y-m-d')));
+require_once('../bootstrap.php');
 
-$config = json_decode(file_get_contents("../config.json"), true);
+$app = AppFactory::create(
+    null,
+    new ServiceManager(require CONFIG_DIR . '/services.config.php', require CONFIG_DIR . '/factories.config.php', []),
+);
 
-$repositoryConfig = new RepositoryConfiguration($config['repository']);
-
-$git = new Git();
-#$git->cloneRepository($repositoryConfig->source(), '../' . $repositoryConfig->directory());
-$repo = $git->open('../' . $repositoryConfig->directory());
-$repo->fetch()->pull('origin');
+$app->get('/', IndexHandler::class);
+$app->addErrorMiddleware(true, true, true);
+$app->run();

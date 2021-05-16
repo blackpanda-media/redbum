@@ -4,3 +4,4 @@ config.json
 .php-cs-fixer.cache
 data\*
 log\*
+composer.lock
