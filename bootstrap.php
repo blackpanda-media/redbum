@@ -8,6 +8,7 @@ define('ROOT_DIR', __DIR__);
 
 const CONFIG_DIR = ROOT_DIR . '/config';
 const LOG_DIR = ROOT_DIR . '/log';
+const THEME_DIR = ROOT_DIR . '/theme';
 
 // PHP settings
 error_reporting(E_ALL | E_STRICT);

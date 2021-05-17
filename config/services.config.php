@@ -3,5 +3,8 @@
 declare(strict_types=1);
 
 return [
-    'config' => file_get_contents(ROOT_DIR . '/config.json'),
+    'config' => json_decode(file_get_contents(ROOT_DIR . '/config.json'), true),
+    'templates' => [
+
+    ],
 ];
