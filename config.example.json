@@ -1,2 +1,18 @@
 {
+  "repository": {
+    "source": "git@github.com:blackpanda-media/redbum-testrepo.git",
+    "directory": "data"
+  },
+  "design": {
+    "theme": "default"
+  },
+  "project": {
+    "name": "RedBum",
+    "description": "A description for description",
+    "settings": {
+      "register": true,
+      "login": true,
+      "search": true
+    }
+  }
 }

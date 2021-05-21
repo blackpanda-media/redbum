@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace RedBum\Handler;
 
+use CzProject\GitPhp\Git;
+use CzProject\GitPhp\GitException;
+use RedBum\Configuration\RepositoryConfiguration;
 use RedBum\Constant\Template;
 use RedBum\Template\Renderer;
 use Slim\Psr7\Request;
@@ -14,20 +17,35 @@ class IndexHandler implements HandlerInterface
     /** @var Renderer */
     private $renderer;
 
-    public function __construct(Renderer $renderer)
+    /** @var RepositoryConfiguration */
+    private $repositoryConfiguration;
+
+    public function __construct(Renderer $renderer, RepositoryConfiguration $repositoryConfiguration)
     {
         $this->renderer = $renderer;
+        $this->repositoryConfiguration = $repositoryConfiguration;
     }
 
     public function __invoke(Request $request, Response $response): Response
     {
-        #$config = json_decode(file_get_contents("../config.json"), true);
-        #$repositoryConfig = new RepositoryConfiguration($config['repository']);
-        #$git = new Git();
-        #$git->cloneRepository($repositoryConfig->source(), '../' . $repositoryConfig->directory());
-        #$repo = $git->open('../' . $repositoryConfig->directory());
-        #$repo->fetch()->pull('origin');
+        $gitDir = ROOT_DIR . '/' . $this->repositoryConfiguration->directory();
 
-        return $this->renderer->render($response, Template::INDEX);
+        $repo = (new Git())->open($gitDir);
+        $content = null;
+        try {
+            $repo->fetch()->pull('origin');
+        } catch (GitException $exception) {
+            $content = $exception->getMessage();
+        }
+
+        if ($content === null) {
+            $content = file_get_contents($gitDir . '/' . $request->getAttribute('path') . '/index.md');
+        }
+
+        return $this->renderer
+            ->withContext([
+                'topic_content' => empty($content) ? 'Cannot find data.' : $content,
+            ])
+            ->render($response, Template::INDEX);
     }
 }

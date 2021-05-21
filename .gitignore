@@ -2,6 +2,6 @@
 vendor
 config.json
 .php-cs-fixer.cache
-data\*
-log\*
+data
+log/*
 composer.lock

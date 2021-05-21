@@ -14,5 +14,6 @@ $app = AppFactory::create(
 );
 
 $app->get('/', IndexHandler::class);
+$app->get('/{path}', IndexHandler::class);
 $app->addErrorMiddleware(true, true, true);
 $app->run();

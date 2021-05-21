@@ -15,6 +15,6 @@ class RepositoryConfigurationFactory implements FactoryInterface
         string $service,
         array $options = []
     ): RepositoryConfiguration {
-        return new RepositoryConfiguration($$container->get('config')['repository']);
+        return new RepositoryConfiguration($container->get('config')['repository']);
     }
 }
