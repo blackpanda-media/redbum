@@ -20,17 +20,21 @@ class IndexHandler implements HandlerInterface
     /** @var RepositoryConfiguration */
     private $repositoryConfiguration;
 
-    public function __construct(Renderer $renderer, RepositoryConfiguration $repositoryConfiguration)
+    /** @var Git */
+    private $git;
+
+    public function __construct(Renderer $renderer, RepositoryConfiguration $repositoryConfiguration, Git $git)
     {
         $this->renderer = $renderer;
         $this->repositoryConfiguration = $repositoryConfiguration;
+        $this->git = $git;
     }
 
     public function __invoke(Request $request, Response $response): Response
     {
         $gitDir = ROOT_DIR . '/' . $this->repositoryConfiguration->directory();
 
-        $repo = (new Git())->open($gitDir);
+        $repo = $this->git->open($gitDir);
         $content = null;
         try {
             $repo->fetch()->pull('origin');

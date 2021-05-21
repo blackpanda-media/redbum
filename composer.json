@@ -21,6 +21,7 @@
     "ext-json": "*",
     "BlackBonjour/service-manager": "1.2.*",
     "czproject/git-php": "4.0.*",
+    "erusev/parsedown": "1.7.*",
     "slim/psr7": "1.4.*",
     "slim/slim": "4.7.*",
     "twig/twig": "3.3.*"

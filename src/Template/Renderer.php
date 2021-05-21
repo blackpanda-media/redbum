@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace RedBum\Template;
 
+use Parsedown;
 use RedBum\Data\DataProvider;
 use Slim\Psr7\Response;
 use Twig\Environment;
@@ -16,13 +17,17 @@ class Renderer
     /** @var Environment */
     private $twig;
 
-    /** @var ?DataProvider */
+    /** @var DataProvider */
     private $dataProvider;
 
-    public function __construct(Environment $twig)
+    /** @var Parsedown */
+    private $parseDown;
+
+    public function __construct(Environment $twig, DataProvider $dataProvider, Parsedown $parsedown)
     {
         $this->twig = $twig;
-        $this->dataProvider = new DataProvider();
+        $this->dataProvider = $dataProvider;
+        $this->parseDown = $parsedown;
     }
 
     public function withContext(array $context): self
@@ -39,7 +44,7 @@ class Renderer
             $renderedContent = 'Error with rendering template: ' . $exception->getMessage();
         }
 
-        $response->getBody()->write($renderedContent);
+        $response->getBody()->write($this->parseDown->parse($renderedContent));
 
         return $response;
     }
